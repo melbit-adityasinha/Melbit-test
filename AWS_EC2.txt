@@ -1,0 +1,43 @@
+# AWS-Ec2.tf
+variable "AWS_ACCESS_KEY"{}                                                                                                                 # As per the IAM role and it's key                                  
+variable "AWS_SECRET_KEY"{}
+
+provider "aws" {
+		region = "ap-southeast-2"
+		access_key = "${var.AWS_ACCESS_KEY}                                                                                                 #Create File at same location and load it was actual details to make call
+		secret_key = "${var.AWS_SECRET_KEY}                                   # OR use profile = "mlbitES/mahendraditya"
+}
+
+resource "aws_key_pair"	"mlbit-es-aditya-key" {
+		key_name = "mlbit-es-aditya-key"
+		public_key = "ssh-rsa AAAhvjvbcjhvkjdhgcvkvchkjvhschvbkjcvskdh455df6564dfv4dc648c46e4564c1c1skdh455df6564dfv4dc648c46e4564c1c1       # generate using ssh-keygen in instance to have access key-pair combination
+455afdcacacd44d5c544da654c564c651c61dc6a1c61c6a16c1654ad56c564dc4d651c61d656ce8ccdcvbfbgbgbdbc645c64skdh455df6564dfv4dc648c46e4564c1c1       # cat mlbit-es-aditya-key.pub and copy paste here
+skdh455df6564dfv4dc648c46e4564c1c1sgnknwrjfgwibkjbvjbdkjbvkjbdkvjviwbvikwvbik test_username@test_ip"
+}
+
+resource "aws_instance" "web_instance_created" {
+		ami = "ami-105546a"                                                                                                                  /*fake ami Created*/
+		instance_type = "m4.xlarge"
+		key_name = "${aws_key_pair.mlbit-es-aditya-key}"
+		tags {
+			 name = "Test Instance"
+			 }
+		}
+resource "aws_instance" "web_instance_destroyed" {
+		ami = "ami-105546a"                                                                                                                  /*fake ami Destroyed */
+		instance_type = "t2.medium"
+		key_name = "${aws_key_pair.Old-mlbit-es-aditya-key}"
+}		
+		
+=================================================================================================================================================		
+
+/* In the terraform.tfvars file enter the actual value like:
+	 AWS_ACCESS_KEY = ""
+	 AWS_SECRET_KEY = ""
+	 
+ To check the plan use comnmanad--"terraform plan"
+ To create the resource in AWs -- "terraform apply"
+ 
+
+*/
+
