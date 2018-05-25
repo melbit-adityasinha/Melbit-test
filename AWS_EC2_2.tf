@@ -19,5 +19,6 @@ resource "aws_instance" "Instance_Deletion" {
     name = "Test_Instance_creation"
   }
 }
+resource "aws_alb" "Test_Alb" {
 
-
+}
